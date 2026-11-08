@@ -11,8 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/styles.css" />
   <style>
-    .app__shots{display:flex;gap:.6rem;overflow-x:auto;padding:.2rem 0 1rem;margin-bottom:.2rem;scrollbar-width:thin}
-    .app__shots img{height:150px;width:auto;border-radius:12px;border:1px solid var(--border);object-fit:cover;flex-shrink:0}
     .lang{display:flex;align-items:center;gap:.1rem;border:1px solid var(--border-strong);border-radius:999px;padding:.18rem;background:var(--surface-2)}
     .lang__globe{width:16px;height:16px;margin:0 .3rem;color:var(--muted);flex-shrink:0}
     .lang__opt{font-size:.76rem;font-weight:700;color:var(--muted);padding:.22rem .5rem;border-radius:999px;line-height:1}
@@ -92,8 +90,20 @@
         <% } %>
 
         <% if (p.images && p.images.length) { %>
-        <div class="app__shots">
-          <% p.images.forEach(function(img){ %><img src="<%= img.url %>" alt="<%= img.caption || p.name %>" loading="lazy" /><% }) %>
+        <div class="shots" data-shots role="group" aria-roledescription="carousel"
+             aria-label="<%= lang==='es' ? 'Capturas de ' + p.name : p.name + ' screenshots' %>">
+          <ul class="shots__track">
+            <% p.images.forEach(function(img, i){ %>
+            <li class="shots__slide">
+              <a class="shots__open" href="<%= img.url %>" target="_blank" rel="noopener"
+                 aria-label="<%= (lang==='es' ? 'Ampliar captura ' : 'Enlarge screenshot ') + (i+1) + '/' + p.images.length + ' · ' + p.name %>">
+                <img src="<%= img.url %>" alt="<%= img.caption || p.name %>" loading="lazy" decoding="async" />
+              </a>
+            </li>
+            <% }) %>
+          </ul>
+          <button type="button" class="shots__nav shots__nav--prev" hidden aria-label="<%= lang==='es' ? 'Capturas anteriores' : 'Previous screenshots' %>">&#8249;</button>
+          <button type="button" class="shots__nav shots__nav--next" hidden aria-label="<%= lang==='es' ? 'Capturas siguientes' : 'Next screenshots' %>">&#8250;</button>
         </div>
         <% } %>
 
@@ -169,6 +179,17 @@
     </div>
   </footer>
 
+  <dialog class="lightbox" id="lightbox" aria-label="<%= lang==='es' ? 'Capturas ampliadas' : 'Enlarged screenshots' %>">
+    <button type="button" class="lightbox__close" aria-label="<%= lang==='es' ? 'Cerrar' : 'Close' %>">&times;</button>
+    <button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="<%= lang==='es' ? 'Anterior' : 'Previous' %>">&#8249;</button>
+    <figure class="lightbox__stage">
+      <img id="lightboxImg" alt="" />
+      <figcaption id="lightboxCount" aria-live="polite"></figcaption>
+    </figure>
+    <button type="button" class="lightbox__nav lightbox__nav--next" aria-label="<%= lang==='es' ? 'Siguiente' : 'Next' %>">&#8250;</button>
+  </dialog>
+
   <script src="/js/script.js"></script>
+  <script src="/js/gallery.js"></script>
 </body>
 </html>
