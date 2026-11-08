@@ -4,3 +4,7 @@ public/uploads/*
 !public/uploads/.gitkeep
 *.log
 .DS_Store
+
+# Salidas locales de las herramientas de diseño
+.taste-skill/
+.playwright-mcp/
