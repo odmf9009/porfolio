@@ -1,0 +1,43 @@
+<%- include('../partials/admin-header', { active: 'dashboard' }) %>
+
+<div class="page__head">
+  <div>
+    <h1>Proyectos</h1>
+    <p class="muted">Administra las apps que se muestran en la web.</p>
+  </div>
+  <a href="/admin/projects/new" class="btn btn--primary">+ Nuevo proyecto</a>
+</div>
+
+<div class="stats">
+  <div class="stat-card"><span class="stat-card__num"><%= projects.length %></span><span class="stat-card__label">Proyectos</span></div>
+  <div class="stat-card"><span class="stat-card__num"><%= projects.filter(p=>p.published).length %></span><span class="stat-card__label">Publicados</span></div>
+  <div class="stat-card"><span class="stat-card__num"><%= usersCount %></span><span class="stat-card__label">Usuarios</span></div>
+  <div class="stat-card stat-card--soon"><span class="stat-card__num">—</span><span class="stat-card__label">Ingresos · Próximamente</span></div>
+</div>
+
+<div class="list">
+  <% if (!projects.length) { %>
+    <p class="muted">Aún no hay proyectos. Crea el primero.</p>
+  <% } %>
+  <% projects.forEach(function(p){ %>
+  <div class="row">
+    <div class="row__icon" style="color:<%= p.accent %>"><%- icons[p.icon] || icons.app %></div>
+    <div class="row__main">
+      <div class="row__title">
+        <%= p.name %>
+        <% if (!p.published) { %><span class="pill pill--muted">Oculto</span><% } %>
+        <% if (p.statusLabel) { %><span class="pill"><%= p.statusLabel %></span><% } %>
+      </div>
+      <div class="row__sub muted"><%= (p.tagline && (p.tagline.es || p.tagline.en)) || '' %> · <%= p.images.length %> foto(s) · orden <%= p.order %></div>
+    </div>
+    <div class="row__actions">
+      <a href="/admin/projects/<%= p._id %>/edit" class="btn btn--sm">Editar</a>
+      <form action="/admin/projects/<%= p._id %>/delete" method="post" data-confirm="¿Eliminar «<%= p.name %>» y sus imágenes?">
+        <button class="btn btn--sm btn--danger">Eliminar</button>
+      </form>
+    </div>
+  </div>
+  <% }) %>
+</div>
+
+<%- include('../partials/admin-footer') %>

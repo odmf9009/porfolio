@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title><%= title %> · Admin — Ventures FL Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="admin">
+  <header class="ah">
+    <a href="/admin" class="ah__brand"><span class="ah__logo">V<span class="accent">FL</span></span> Panel</a>
+    <nav class="ah__nav">
+      <a href="/admin" class="<%= (typeof active!=='undefined' && active==='dashboard') ? 'is-active':'' %>">Proyectos</a>
+      <a href="/admin/content" class="<%= (typeof active!=='undefined' && active==='content') ? 'is-active':'' %>">Contenido</a>
+      <% if (currentUser && currentUser.role === 'admin') { %>
+        <a href="/admin/users" class="<%= (typeof active!=='undefined' && active==='users') ? 'is-active':'' %>">Usuarios</a>
+      <% } %>
+      <span class="ah__soon" title="Próximamente">Métricas & Monetización</span>
+    </nav>
+    <div class="ah__right">
+      <a href="/" target="_blank" class="ah__link">Ver web ↗</a>
+      <span class="ah__user"><%= currentUser ? currentUser.username : '' %></span>
+      <form action="/admin/logout" method="post"><button class="btn btn--sm btn--ghost">Salir</button></form>
+    </div>
+  </header>
+  <main class="awrap">

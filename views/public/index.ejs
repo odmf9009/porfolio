@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title><%= t('metaTitle') %></title>
+  <meta name="description" content="<%= t('metaDesc') %>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    .app__shots{display:flex;gap:.6rem;overflow-x:auto;padding:.2rem 0 1rem;margin-bottom:.2rem;scrollbar-width:thin}
+    .app__shots img{height:150px;width:auto;border-radius:12px;border:1px solid var(--border);object-fit:cover;flex-shrink:0}
+    .lang{display:flex;align-items:center;gap:.1rem;border:1px solid var(--border-strong);border-radius:999px;padding:.18rem;background:var(--surface-2)}
+    .lang__globe{width:16px;height:16px;margin:0 .3rem;color:var(--muted);flex-shrink:0}
+    .lang__opt{font-size:.76rem;font-weight:700;color:var(--muted);padding:.22rem .5rem;border-radius:999px;line-height:1}
+    .lang__opt.is-active{background:var(--accent);color:#160a02}
+    .nav__right{display:flex;align-items:center;gap:.8rem}
+  </style>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--2" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="#top" class="nav__brand">
+      <span class="nav__logo">V<span class="accent">FL</span></span>
+      <span class="nav__brandtext">Ventures FL Studio</span>
+    </a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#apps"><%= t('navApps') %></a>
+      <a href="#stack"><%= t('navTech') %></a>
+      <a href="#about"><%= t('navAbout') %></a>
+      <a href="#contacto" class="nav__cta"><%= t('navContact') %></a>
+    </nav>
+    <div class="nav__right">
+      <div class="lang" role="group" aria-label="Language">
+        <svg class="lang__globe" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M3 12h18M12 3c2.5 2.5 3.5 6 3.5 9S14.5 18.5 12 21C9.5 18.5 8.5 15 8.5 12S9.5 5.5 12 3z" stroke="currentColor" stroke-width="1.5"/></svg>
+        <a href="/lang/en" class="lang__opt <%= lang==='en' ? 'is-active':'' %>">EN</a>
+        <a href="/lang/es" class="lang__opt <%= lang==='es' ? 'is-active':'' %>">ES</a>
+      </div>
+      <button class="nav__toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero__inner">
+      <span class="badge"><%= t('heroBadge') %></span>
+      <h1 class="hero__title"><%= t('heroTitleLead') %> <span class="grad"><%= t('heroTitleGrad') %></span><br /><%= t('heroTitleRest') %></h1>
+      <p class="hero__sub"><%- t('heroSub') %></p>
+      <div class="hero__actions">
+        <a href="#apps" class="btn btn--primary"><%= t('heroCtaPrimary') %></a>
+        <a href="#contacto" class="btn btn--ghost"><%= t('heroCtaGhost') %></a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat"><span class="stat__num"><%= projects.length %></span><span class="stat__label"><%= t('statAppsLabel') %></span></div>
+        <div class="stat"><span class="stat__num"><%= t('statMultiNum') %></span><span class="stat__label"><%= t('statMultiLabel') %></span></div>
+        <div class="stat"><span class="stat__num"><%= t('statRtNum') %></span><span class="stat__label"><%= t('statRtLabel') %></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="apps">
+    <div class="section__head">
+      <h2 class="section__title"><%= t('appsTitle') %></h2>
+      <p class="section__desc"><%= t('appsDesc') %></p>
+    </div>
+
+    <div class="apps">
+      <% projects.forEach(function(p){ %>
+      <article class="app reveal" style="--accent:<%= p.accent %>;--accent-2:<%= p.accent2 %>">
+        <div class="app__top">
+          <div class="app__icon"><%- icons[p.icon] || icons.app %></div>
+          <div>
+            <h3 class="app__name"><%= p.name %></h3>
+            <% if (loc(p.tagline)) { %><p class="app__tag"><%= loc(p.tagline) %></p><% } %>
+          </div>
+          <% if (loc(p.statusLabel)) { %>
+            <span class="app__status <%= p.statusType==='live' ? 'app__status--live' : (p.statusType==='soon' ? 'app__status--soon' : '') %>"><%= loc(p.statusLabel) %></span>
+          <% } %>
+        </div>
+
+        <% if (loc(p.description)) { %><p class="app__desc"><%= loc(p.description) %></p><% } %>
+
+        <% var feats = loc(p.features) || []; if (feats.length) { %>
+        <ul class="app__features">
+          <% feats.forEach(function(f){ %><li><%= f %></li><% }) %>
+        </ul>
+        <% } %>
+
+        <% if (p.images && p.images.length) { %>
+        <div class="app__shots">
+          <% p.images.forEach(function(img){ %><img src="<%= img.url %>" alt="<%= img.caption || p.name %>" loading="lazy" /><% }) %>
+        </div>
+        <% } %>
+
+        <div class="app__foot">
+          <div class="tech"><% (p.tech||[]).forEach(function(t){ %><span><%= t %></span><% }) %></div>
+          <div class="plat">
+            <% if (p.platforms && p.platforms.ios) { %><span title="iOS" class="plat__ios"></span><% } %>
+            <% if (p.platforms && p.platforms.android) { %><span title="Android" class="plat__android"></span><% } %>
+          </div>
+        </div>
+
+        <% if ((p.storeLinks && (p.storeLinks.appStore || p.storeLinks.playStore)) || (p.directDownload && p.directDownload.url)) { %>
+        <div class="app__links">
+          <% if (p.storeLinks && p.storeLinks.appStore) { %>
+            <a href="<%= p.storeLinks.appStore %>" target="_blank" rel="noopener" class="app__link">App Store</a>
+          <% } %>
+          <% if (p.storeLinks && p.storeLinks.playStore) { %>
+            <a href="<%= p.storeLinks.playStore %>" target="_blank" rel="noopener" class="app__link">Google Play</a>
+          <% } %>
+          <% if (p.directDownload && p.directDownload.url) { %>
+            <a href="<%= p.directDownload.url %>" class="app__link app__link--primary">
+              <%= loc(p.directDownload.label) || (lang==='es' ? 'Descargar APK' : 'Download APK') %>
+            </a>
+          <% } %>
+        </div>
+        <% } %>
+      </article>
+      <% }) %>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="stack">
+    <div class="section__head">
+      <h2 class="section__title"><%= t('stackTitle') %></h2>
+      <p class="section__desc"><%= t('stackDesc') %></p>
+    </div>
+    <div class="stack">
+      <div class="stack__card reveal"><h3><%= t('stackFrontTitle') %></h3><p><%- t('stackFrontBody') %></p><div class="tech"><span>Flutter</span><span>Dart</span><span>Vue.js</span><span>HTML5</span></div></div>
+      <div class="stack__card reveal"><h3><%= t('stackBackTitle') %></h3><p><%- t('stackBackBody') %></p><div class="tech"><span>Node.js</span><span>Express</span><span>PHP</span><span>MongoDB</span><span>Socket.io</span></div></div>
+      <div class="stack__card reveal"><h3><%= t('stackAiTitle') %></h3><p><%- t('stackAiBody') %></p><div class="tech"><span>IA / AI</span><span>Vision</span><span>LLMs</span><span>Automatización</span></div></div>
+      <div class="stack__card reveal"><h3><%= t('stackPlatTitle') %></h3><p><%- t('stackPlatBody') %></p><div class="tech"><span>Firebase</span><span>App Store</span><span>Google Play</span><span>Hosting</span><span>nginx</span></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="about">
+      <div class="about__text reveal">
+        <h2 class="section__title"><%= t('aboutTitle') %></h2>
+        <p><%- t('aboutP1') %></p>
+        <p><%- t('aboutP2') %></p>
+      </div>
+      <ul class="about__list reveal">
+        <li><span>01</span> <%= t('aboutList1') %></li>
+        <li><span>02</span> <%= t('aboutList2') %></li>
+        <li><span>03</span> <%= t('aboutList3') %></li>
+        <li><span>04</span> <%= t('aboutList4') %></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--cta" id="contacto">
+    <div class="cta reveal">
+      <h2><%= t('ctaTitle') %></h2>
+      <p><%= t('ctaText') %></p>
+      <a href="mailto:<%= t('contactEmail') %>" class="btn btn--primary"><%= t('ctaBtn') %></a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="nav__logo">V<span class="accent">FL</span></span>
+      <p>© <%= year %> Ventures FL Studio · <%= projects.map(function(p){return p.name}).join(' · ') %></p>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

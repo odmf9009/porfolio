@@ -1,0 +1,41 @@
+<%- include('../partials/admin-header', { active: 'content' }) %>
+
+<div class="page__head">
+  <div><h1>Contenido del sitio</h1><p class="muted">Edita los textos de cada sección en inglés y español. Al guardar, se ven al instante en la web.</p></div>
+  <a href="/" target="_blank" class="btn btn--sm btn--ghost">Ver web ↗</a>
+</div>
+
+<% if (saved) { %><p class="alert alert--ok">Cambios guardados ✓</p><% } %>
+
+<form action="/admin/content" method="post">
+  <% groups.forEach(function(g){ %>
+  <section class="card csection">
+    <h2><%= g.group %></h2>
+    <% g.fields.forEach(function(f){
+         var v = values[f.key] || {};
+         var enVal = (v.en != null && v.en !== '') ? v.en : (strings.en[f.key] || '');
+         var esVal = (v.es != null && v.es !== '') ? v.es : (strings.es[f.key] || '');
+    %>
+    <div class="cfield">
+      <div class="cfield__label"><%= f.label %><% if (f.html) { %> <span class="pill pill--muted">HTML</span><% } %></div>
+      <div class="cfield__inputs">
+        <label>EN
+          <% if (f.ml) { %><textarea name="en__<%= f.key %>" rows="2"><%= enVal %></textarea>
+          <% } else { %><input type="text" name="en__<%= f.key %>" value="<%= enVal %>" /><% } %>
+        </label>
+        <label>ES
+          <% if (f.ml) { %><textarea name="es__<%= f.key %>" rows="2"><%= esVal %></textarea>
+          <% } else { %><input type="text" name="es__<%= f.key %>" value="<%= esVal %>" /><% } %>
+        </label>
+      </div>
+    </div>
+    <% }) %>
+  </section>
+  <% }) %>
+
+  <div class="content__save">
+    <button class="btn btn--primary">Guardar todo el contenido</button>
+  </div>
+</form>
+
+<%- include('../partials/admin-footer') %>

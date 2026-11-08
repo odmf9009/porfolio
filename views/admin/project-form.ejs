@@ -1,0 +1,119 @@
+<%- include('../partials/admin-header', { active: 'dashboard' }) %>
+<%
+  const isEdit = !!(project && project._id);
+  const p = project || {};
+  function jl(v){ return Array.isArray(v) ? v.join('\n') : (v || ''); }
+  const tagEn  = p.tagline ? p.tagline.en : (p.tagline_en || '');
+  const tagEs  = p.tagline ? p.tagline.es : (p.tagline_es || '');
+  const descEn = p.description ? p.description.en : (p.description_en || '');
+  const descEs = p.description ? p.description.es : (p.description_es || '');
+  const stEn   = p.statusLabel ? p.statusLabel.en : (p.statusLabel_en || '');
+  const stEs   = p.statusLabel ? p.statusLabel.es : (p.statusLabel_es || '');
+  const featEn = p.features ? jl(p.features.en) : (p.features_en || '');
+  const featEs = p.features ? jl(p.features.es) : (p.features_es || '');
+  const iosChecked = project ? (p.platforms ? !!p.platforms.ios : !!p.ios) : true;
+  const androidChecked = project ? (p.platforms ? !!p.platforms.android : !!p.android) : true;
+  const publishedChecked = project ? !!p.published : true;
+  const appStoreUrl = p.storeLinks ? p.storeLinks.appStore : '';
+  const playStoreUrl = p.storeLinks ? p.storeLinks.playStore : '';
+  const ddUrl = p.directDownload ? p.directDownload.url : '';
+  const ddLabelEn = p.directDownload && p.directDownload.label ? p.directDownload.label.en : '';
+  const ddLabelEs = p.directDownload && p.directDownload.label ? p.directDownload.label.es : '';
+%>
+
+<div class="page__head">
+  <div><h1><%= isEdit ? 'Editar proyecto' : 'Nuevo proyecto' %></h1></div>
+  <a href="/admin" class="btn btn--sm btn--ghost">← Volver</a>
+</div>
+
+<% if (error) { %><p class="alert"><%= error %></p><% } %>
+
+<form action="<%= isEdit ? '/admin/projects/' + p._id : '/admin/projects' %>" method="post" class="form form--grid">
+  <label class="col-2">Nombre (no se traduce)
+    <input type="text" name="name" value="<%= p.name || '' %>" required />
+  </label>
+  <label>Orden
+    <input type="number" name="order" value="<%= (p.order!=null?p.order:0) %>" />
+  </label>
+
+  <label class="col-2">Slug (URL, opcional)
+    <input type="text" name="slug" value="<%= p.slug || '' %>" placeholder="se genera del nombre" />
+  </label>
+  <label>Tipo de estado
+    <select name="statusType">
+      <% ['normal','live','soon'].forEach(function(s){ %>
+        <option value="<%= s %>" <%= (p.statusType||'normal')===s?'selected':'' %>><%= s==='live'?'Verde (live)':(s==='soon'?'Amarillo (próximamente)':'Neutro') %></option>
+      <% }) %>
+    </select>
+  </label>
+
+  <label>Eslogan (EN)<input type="text" name="tagline_en" value="<%= tagEn %>" /></label>
+  <label>Eslogan (ES)<input type="text" name="tagline_es" value="<%= tagEs %>" /></label>
+  <label>Icono
+    <select name="icon">
+      <% Object.keys(icons).forEach(function(k){ %>
+        <option value="<%= k %>" <%= (p.icon||'app')===k?'selected':'' %>><%= k %></option>
+      <% }) %>
+    </select>
+  </label>
+
+  <label class="col-3">Descripción (EN)<textarea name="description_en" rows="4"><%= descEn %></textarea></label>
+  <label class="col-3">Descripción (ES)<textarea name="description_es" rows="4"><%= descEs %></textarea></label>
+
+  <label>Etiqueta estado (EN)<input type="text" name="statusLabel_en" value="<%= stEn %>" placeholder="Coming soon" /></label>
+  <label>Etiqueta estado (ES)<input type="text" name="statusLabel_es" value="<%= stEs %>" placeholder="Próximamente" /></label>
+  <div></div>
+
+  <label>Color acento<input type="color" name="accent" value="<%= p.accent || '#F97316' %>" /></label>
+  <label>Color acento 2<input type="color" name="accent2" value="<%= p.accent2 || '#1E3A8A' %>" /></label>
+  <div class="checks">
+    <label class="check"><input type="checkbox" name="ios" <%= iosChecked?'checked':'' %> /> iOS</label>
+    <label class="check"><input type="checkbox" name="android" <%= androidChecked?'checked':'' %> /> Android</label>
+    <label class="check"><input type="checkbox" name="published" <%= publishedChecked?'checked':'' %> /> Publicado</label>
+  </div>
+
+  <label class="col-3">Funciones — EN (una por línea)<textarea name="features_en" rows="4"><%= featEn %></textarea></label>
+  <label class="col-3">Funciones — ES (una por línea)<textarea name="features_es" rows="4"><%= featEs %></textarea></label>
+
+  <label class="col-3">Tecnologías (una por línea, no se traducen)<textarea name="tech" rows="3"><%= jl(p.tech) %></textarea></label>
+
+  <label>Link App Store<input type="url" name="appStoreUrl" value="<%= appStoreUrl %>" placeholder="https://apps.apple.com/..." /></label>
+  <label>Link Google Play<input type="url" name="playStoreUrl" value="<%= playStoreUrl %>" placeholder="https://play.google.com/..." /></label>
+  <div></div>
+
+  <label class="col-2">Descarga directa — URL (ej. APK fuera de la tienda)
+    <input type="url" name="ddUrl" value="<%= ddUrl %>" placeholder="https://dashboard.krbusinessventures.org/downloads/xxx.apk" />
+  </label>
+  <div></div>
+  <label>Descarga directa — texto del botón (EN)<input type="text" name="ddLabelEn" value="<%= ddLabelEn %>" placeholder="Download APK" /></label>
+  <label>Descarga directa — texto del botón (ES)<input type="text" name="ddLabelEs" value="<%= ddLabelEs %>" placeholder="Descargar APK" /></label>
+  <div></div>
+
+  <div class="col-3 form__actions">
+    <button type="submit" class="btn btn--primary"><%= isEdit ? 'Guardar cambios' : 'Crear proyecto' %></button>
+  </div>
+</form>
+
+<% if (isEdit) { %>
+<section class="card">
+  <h2>Imágenes</h2>
+  <p class="muted">Se muestran en la tarjeta de la app en la web pública.</p>
+  <form action="/admin/projects/<%= p._id %>/images" method="post" enctype="multipart/form-data" class="upload">
+    <input type="file" name="images" accept="image/*" multiple required />
+    <button type="submit" class="btn btn--sm">Subir</button>
+  </form>
+  <div class="gallery">
+    <% (p.images||[]).forEach(function(img){ %>
+    <figure class="gallery__item">
+      <img src="<%= img.url %>" alt="" />
+      <form action="/admin/projects/<%= p._id %>/images/<%= img._id %>/delete" method="post" data-confirm="¿Eliminar esta imagen?">
+        <button class="gallery__del" title="Eliminar">✕</button>
+      </form>
+    </figure>
+    <% }) %>
+    <% if (!(p.images||[]).length) { %><p class="muted">Aún no hay imágenes.</p><% } %>
+  </div>
+</section>
+<% } %>
+
+<%- include('../partials/admin-footer') %>

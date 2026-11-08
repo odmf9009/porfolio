@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Acceso — Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="admin admin--login">
+  <div class="login">
+    <div class="login__brand"><span class="ah__logo">V<span class="accent">FL</span></span> Ventures FL Studio</div>
+    <h1>Panel de administración</h1>
+    <% if (error) { %><p class="alert"><%= error %></p><% } %>
+    <form action="/admin/login" method="post" class="form">
+      <label>Usuario
+        <input type="text" name="username" autocomplete="username" required autofocus />
+      </label>
+      <label>Contraseña
+        <input type="password" name="password" autocomplete="current-password" required />
+      </label>
+      <button type="submit" class="btn btn--primary btn--block">Entrar</button>
+    </form>
+    <a href="/" class="login__back">← Volver a la web</a>
+  </div>
+</body>
+</html>
