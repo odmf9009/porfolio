@@ -78,6 +78,11 @@ app.use(
 // Rutas
 app.use('/api', apiRoutes);
 app.use('/', publicRoutes);
+// El panel nunca debe aparecer en buscadores, aunque la web pública sí.
+app.use('/admin', (req, res, next) => {
+  res.set('X-Robots-Tag', 'noindex, nofollow');
+  next();
+});
 app.use('/admin', authRoutes);
 app.use('/admin', adminRoutes);
 

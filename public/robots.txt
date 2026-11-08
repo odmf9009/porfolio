@@ -1,3 +1,7 @@
-# Sitio privado / no listado: pedimos a los buscadores que NO lo indexen.
+# Web pública abierta a buscadores; el panel de administración y la API no se rastrean.
 User-agent: *
-Disallow: /
+Disallow: /admin
+Disallow: /api/
+Allow: /
+
+Sitemap: https://krbusinessventures.org/sitemap.xml

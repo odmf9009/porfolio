@@ -62,7 +62,12 @@ pm2 restart porfolio
 Tras desplegar, comprobar en producción con el navegador y `/api/site`. Si en producción hay textos editados en /admin que aún nombran
 ToFast o PromOff, hay que corregirlos desde Contenido (los valores por defecto ya no los mencionan, pero lo editado manda).
 
-## Pendiente de decisión del dueño
-- `<meta robots noindex, nofollow>` (`client/index.html`): ¿abrir el sitio a buscadores?
+## Indexación (decidido el 2026-11-08: la web SÍ se indexa)
+`client/index.html` lleva `robots: index, follow`, canonical y Open Graph (el servidor inyecta título/descripción según el idioma;
+`SITE_URL` fija la URL pública). `public/robots.txt` permite todo salvo `/admin` y `/api/`; `public/sitemap.xml` lista la portada. El panel
+`/admin` responde siempre con `X-Robots-Tag: noindex, nofollow`. Para volver a ocultar el sitio: `noindex` en `index.html` y
+`Disallow: /` en `robots.txt`. Tras desplegar, dar de alta el sitio en Google Search Console (acción del dueño).
+
+## Pendiente
 - Subir los APK firmados (FixRadar, CurbRadar, SkillFix) en el cuadro de mando; los botones de descarga salen solos cuando el archivo existe.
 - Imágenes de Invoice Snap (hay 10 capturas) y de Habanera (faltan) si se quieren en el portafolio.
