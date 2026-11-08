@@ -1,0 +1,184 @@
+/* ===== Tokens y base (global). Lo específico de cada componente vive en su <style scoped>. ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0a0d14;
+  --surface: #121722;
+  --surface-2: #171d2a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --text: #eaedf3;
+  --muted: #98a2b3;
+  --accent: #f97316;
+  --accent-blue: #3b82f6;
+  --radius: 18px;
+  --maxw: 1140px;
+  --gutter: clamp(1rem, 4vw, 2.2rem);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px; /* el menú fijo no tapa el título al saltar a una sección */
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Sora', sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+html.is-locked {
+  overflow: hidden;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.grad {
+  background: linear-gradient(100deg, var(--accent), #fbbf24 55%, var(--accent-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== Botones ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    background 0.2s,
+    border-color 0.2s;
+}
+.btn--primary {
+  background: linear-gradient(135deg, var(--accent), #fb923c);
+  color: #160a02;
+  box-shadow: 0 8px 24px -8px rgba(249, 115, 22, 0.6);
+}
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -8px rgba(249, 115, 22, 0.7);
+}
+.btn--ghost {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+.btn--ghost:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ===== Secciones ===== */
+.section {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 5.5rem) var(--gutter);
+}
+.section__head {
+  max-width: 640px;
+  margin-bottom: 2.6rem;
+}
+.section__title {
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+.section__desc {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+/* ===== Aparición al hacer scroll (ver src/directives/motion.js) =====
+   Solo se oculta algo cuando <html> lleva la clase .motion; si el script falla o el sistema pide
+   menos movimiento, todo queda visible. */
+.motion [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition:
+    opacity 0.85s var(--ease-out),
+    transform 1s var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+.motion [data-reveal='scale'] {
+  transform: translate3d(0, 20px, 0) scale(0.94);
+}
+.motion [data-reveal='left'] {
+  transform: translate3d(-48px, 0, 0);
+}
+.motion [data-reveal='right'] {
+  transform: translate3d(48px, 0, 0);
+}
+.motion [data-reveal][data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+[data-parallax] {
+  transform: translate3d(0, var(--py, 0px), 0) scale(var(--ps, 1));
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .motion [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  [data-parallax] {
+    transform: none;
+    will-change: auto;
+  }
+}

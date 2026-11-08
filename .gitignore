@@ -8,3 +8,10 @@ public/uploads/*
 # Salidas locales de las herramientas de diseño
 .taste-skill/
 .playwright-mcp/
+
+# Web pública en Vue: lo compilado se genera en el servidor (cd client && npm run build)
+client/dist/
+client/package-lock.json
+
+# Configuración del editor (personal)
+.idea/

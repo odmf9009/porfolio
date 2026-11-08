@@ -6,7 +6,7 @@ const strings = {
   en: {
     metaTitle: 'Ventures FL Studio — App Portfolio',
     metaDesc:
-      'Portfolio of Ventures FL Studio: FixRadar, CurbRadar, SkillFix, ToFast and PromOff. Mobile apps built with Flutter.',
+      'Portfolio of Ventures FL Studio: FixRadar, CurbRadar, SkillFix and CardAlert. Mobile apps built with Flutter.',
     navApps: 'Apps',
     navTech: 'Technology',
     navAbout: 'About',
@@ -24,6 +24,10 @@ const strings = {
     statMultiLabel: 'multiplatform',
     statRtNum: 'Real-time',
     statRtLabel: 'Socket.io · FCM',
+    storeSoonPlay: 'Coming soon to Google Play',
+    storeSoonApple: 'Coming soon to the App Store',
+    storeSoonBoth: 'Coming soon to the App Store and Google Play',
+    apkLabel: 'Download APK',
     appsTitle: 'Our applications',
     appsDesc: 'Every product with the same focus: careful experience and solid technology.',
     stackTitle: 'What we do',
@@ -45,7 +49,7 @@ const strings = {
     aboutP1:
       'At <strong>Ventures FL Studio</strong> we turn ideas into real mobile products. We handle the whole cycle: discovery, product design, frontend and backend development, service integration and the full publishing process on the stores.',
     aboutP2:
-      'Our common thread are the <em>"radar"</em> apps —FixRadar and CurbRadar— that put real-time geolocation at people\'s service, plus useful everyday tools like SkillFix, ToFast and PromOff.',
+      'Our common thread are the <em>"radar"</em> apps —FixRadar and CurbRadar— that put real-time geolocation at people\'s service, plus useful everyday tools like SkillFix and CardAlert.',
     aboutList1: 'End-to-end product',
     aboutList2: 'Geolocation and real-time',
     aboutList3: 'Published on iOS and Android',
@@ -53,12 +57,12 @@ const strings = {
     ctaTitle: 'Have an app idea?',
     ctaText: "Tell us what you want to build and we'll make it happen.",
     ctaBtn: 'Get in touch',
-    contactEmail: 'hola@venturesflstudio.com',
+    contactEmail: 'contact@krbusinessventures.org',
   },
   es: {
     metaTitle: 'Ventures FL Studio — Portfolio de Apps',
     metaDesc:
-      'Portfolio de Ventures FL Studio: FixRadar, CurbRadar, SkillFix, ToFast y PromOff. Apps móviles construidas con Flutter.',
+      'Portfolio de Ventures FL Studio: FixRadar, CurbRadar, SkillFix y CardAlert. Apps móviles construidas con Flutter.',
     navApps: 'Apps',
     navTech: 'Tecnología',
     navAbout: 'Sobre nosotros',
@@ -76,6 +80,10 @@ const strings = {
     statMultiLabel: 'multiplataforma',
     statRtNum: 'Tiempo real',
     statRtLabel: 'Socket.io · FCM',
+    storeSoonPlay: 'Muy pronto en Google Play',
+    storeSoonApple: 'Muy pronto en la App Store',
+    storeSoonBoth: 'Muy pronto en la App Store y Google Play',
+    apkLabel: 'Descargar APK',
     appsTitle: 'Nuestras aplicaciones',
     appsDesc: 'Cada producto con un mismo enfoque: experiencia cuidada y tecnología sólida.',
     stackTitle: 'Qué hacemos',
@@ -97,7 +105,7 @@ const strings = {
     aboutP1:
       'En <strong>Ventures FL Studio</strong> convertimos ideas en productos móviles reales. Nos ocupamos de todo el ciclo: descubrimiento, diseño de producto, desarrollo del frontend y el backend, integración de servicios y el proceso completo de publicación en las tiendas.',
     aboutP2:
-      'Nuestro hilo conductor son las apps <em>"radar"</em> —FixRadar y CurbRadar— que ponen la geolocalización en tiempo real al servicio de las personas, sumadas a herramientas útiles del día a día como SkillFix, ToFast y PromOff.',
+      'Nuestro hilo conductor son las apps <em>"radar"</em> —FixRadar y CurbRadar— que ponen la geolocalización en tiempo real al servicio de las personas, sumadas a herramientas útiles del día a día como SkillFix y CardAlert.',
     aboutList1: 'Producto de principio a fin',
     aboutList2: 'Geolocalización y tiempo real',
     aboutList3: 'Publicación en iOS y Android',
@@ -105,7 +113,7 @@ const strings = {
     ctaTitle: '¿Tienes una idea de app?',
     ctaText: 'Cuéntanos qué quieres construir y la hacemos realidad.',
     ctaBtn: 'Escríbenos',
-    contactEmail: 'hola@venturesflstudio.com',
+    contactEmail: 'contact@krbusinessventures.org',
   },
 };
 

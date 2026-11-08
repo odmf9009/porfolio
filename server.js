@@ -10,6 +10,7 @@ const connectDB = require('./src/config/db');
 const i18n = require('./src/utils/i18n');
 const siteContent = require('./src/utils/siteContent');
 const publicRoutes = require('./src/routes/public');
+const apiRoutes = require('./src/routes/api');
 const authRoutes = require('./src/routes/auth');
 const adminRoutes = require('./src/routes/admin');
 
@@ -45,6 +46,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// Web pública en Vue (compilada): los archivos de /assets llevan hash en el nombre, así que se cachean un año.
+app.use(
+  express.static(path.join(__dirname, 'client', 'dist'), {
+    index: false,
+    setHeaders: (res, file) => {
+      if (file.includes(`${path.sep}assets${path.sep}`)) res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    },
+  })
+);
 
 // Idioma (query > cookie > inglés por defecto). Expone t() y loc() a las vistas.
 app.use(i18n.middleware);
@@ -66,6 +76,7 @@ app.use(
 );
 
 // Rutas
+app.use('/api', apiRoutes);
 app.use('/', publicRoutes);
 app.use('/admin', authRoutes);
 app.use('/admin', adminRoutes);

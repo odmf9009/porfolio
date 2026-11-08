@@ -40,6 +40,10 @@ module.exports = [
     fields: [
       { key: 'appsTitle', label: 'Título' },
       { key: 'appsDesc', label: 'Descripción', ml: true },
+      { key: 'storeSoonPlay', label: 'Aviso si la app no está en Google Play' },
+      { key: 'storeSoonApple', label: 'Aviso si la app no está en la App Store' },
+      { key: 'storeSoonBoth', label: 'Aviso si no está en ninguna tienda' },
+      { key: 'apkLabel', label: 'Botón de descarga propia (APK), si el proyecto no define el suyo' },
     ],
   },
   {
