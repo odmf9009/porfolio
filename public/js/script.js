@@ -1,5 +1,8 @@
-// Año dinámico en el footer
-document.getElementById('year').textContent = new Date().getFullYear();
+// Año dinámico en el footer (el año ya viene pintado por el servidor; esto solo
+// actualiza si existe el elemento: antes fallaba y abortaba TODO el script,
+// dejando invisibles las tarjetas y secciones que aparecen al hacer scroll).
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // Menú móvil
 const toggle = document.getElementById('navToggle');
