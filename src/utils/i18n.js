@@ -57,7 +57,7 @@ const strings = {
     ctaTitle: 'Have an app idea?',
     ctaText: "Tell us what you want to build and we'll make it happen.",
     ctaBtn: 'Get in touch',
-    contactEmail: 'contact@krbusinessventures.org',
+    contactEmail: 'support@krbusinessventures.org',
   },
   es: {
     metaTitle: 'Ventures FL Studio — Portfolio de Apps',
@@ -113,7 +113,7 @@ const strings = {
     ctaTitle: '¿Tienes una idea de app?',
     ctaText: 'Cuéntanos qué quieres construir y la hacemos realidad.',
     ctaBtn: 'Escríbenos',
-    contactEmail: 'contact@krbusinessventures.org',
+    contactEmail: 'support@krbusinessventures.org',
   },
 };
 
