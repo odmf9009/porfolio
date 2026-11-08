@@ -100,6 +100,11 @@ img{max-width:100%}
 .app::after{content:"";position:absolute;top:-40%;right:-30%;width:260px;height:260px;border-radius:50%;
   background:radial-gradient(circle,color-mix(in srgb,var(--accent) 40%,transparent),transparent 70%);
   opacity:.16;transition:opacity .3s}
+/* Las capas decorativas (borde con degradado y brillo) van POR ENCIMA del contenido
+   y cubren la tarjeta entera: sin esto interceptan los clics y los botones de App Store /
+   Google Play / APK no hacen nada. */
+.app::before,.app::after{pointer-events:none}
+.app__links{position:relative;z-index:1}
 .app:hover{transform:translateY(-6px);border-color:transparent;box-shadow:0 24px 50px -20px rgba(0,0,0,.7)}
 .app:hover::before{opacity:1}
 .app:hover::after{opacity:.3}
